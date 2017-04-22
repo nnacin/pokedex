@@ -28,6 +28,15 @@ const styles = {
         width: '50px',
         transform: 'translateX(120%)'
     },
+    pokemonList: {
+        minHeight: '100vh',
+        height: 'auto',
+        marginTop: '185px',
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        alignItems: 'center'
+    },
     pokemonLabel: {
         display: 'block',
         textAlign: 'center'
@@ -81,6 +90,11 @@ const styles = {
         padding: '0 5px',
         color: 'white',
         fontFamily: 'Helvetica, Sans-Serif'
+    },
+    spinner: {
+        width: 50,
+        marginTop: '195px',
+        height: 'calc(100vh - 50px)'
     }
 };
 
@@ -137,7 +151,7 @@ class PokemonList extends Component {
     render() {
         if (this.props.pokemonList.results) {
             return (
-                <div style={{  minHeight: '100vh', height: 'auto', marginTop: '185px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', alignItems: 'center' }}>
+                <div style={styles.pokemonList}>
                     {this.props.pokemonList.results.map((item, key) =>
                         <div style={styles.pokemon} key={key}>
                             <img
@@ -147,33 +161,24 @@ class PokemonList extends Component {
                             />
                             <span style={styles.pokemonLabel}>{item.name}</span>
                             <br/>
-                            {
-                                //!!this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6]) ||
-                                <button
+                            {   <button
                                     onClick={() => !!this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6]) || this.addToMyPokemons(item)}
                                     style={this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6]) ? styles.addButtonDisabled : styles.addButton}
                                     title={this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6]) ? 'Already in My pokemon list.' : ''}
                                 >
-                                    Add</button>
+                                    Add
+                                </button>
                             }
                         </div>)
                     }
-                    {!this.state.selectedPokemon.abilities ||
+                    {!this.state.selectedPokemon.name ||
                         <Pokemon
                             selectedPokemon={this.state.selectedPokemon}
                             handleRequestCloseFunc={() => this.setState({ selectedPokemon: {} })}
                         />
-
                     }
-                    <div
-                    style={this.props.showMyPokemon ? styles.openMyPokemon : styles.closeMyPokemon}
-                    >
-                        <button
-                            onClick={this.props.requestCloseFn}
-                            style={styles.closeButton}
-                        >
-                            X
-                        </button>
+                    <div style={this.props.showMyPokemon ? styles.openMyPokemon : styles.closeMyPokemon}>
+                        <button onClick={this.props.requestCloseFn} style={styles.closeButton}>X</button>
                         {this.state.myPokemon.map((item, key) =>
                             <div style={styles.myPokemon} key={key}>
                                 <img
@@ -184,11 +189,7 @@ class PokemonList extends Component {
                                 <span style={styles.pokemonLabel}>
                                     {item.name}
                                 </span>
-
-                                <button
-                                    style={styles.removeButton}
-                                    onClick={() => this.removePokemon(item)}>Remove</button>
-
+                                <button style={styles.removeButton} onClick={() => this.removePokemon(item)}>Remove</button>
                             </div>)}
                     </div>
                 </div>
@@ -199,7 +200,7 @@ class PokemonList extends Component {
                 radius: 25,
                 length: 20
             };
-            return <div style={style}><ReactSpinner config={configObject} /></div>
+            return <div style={styles.spinner}><ReactSpinner config={configObject}/></div>
         }
     }
 }

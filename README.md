@@ -22,3 +22,6 @@ Korisnik aplikacije mora biti u mogucnosti:
 
 Koristen boilerplate: https://github.com/nolotz/react-simple-boilerplate
 
+Znam da dizajn nije bas nesto, ali funkcionalno jest! :)
+
+
