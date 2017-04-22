@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 
 const styles = {
     openMyPokemon: {
-        zIndex: '300',
+        zIndex: '1',
         position: 'fixed',
         top: '0',
         bottom: '0',
@@ -11,9 +11,9 @@ const styles = {
         willChange: 'transform',
         overflowY: 'auto',
         right: '0',
-        width: '100px',
+        width: '150px',
         transform: 'translateX(0%)',
-        backgroundColor: 'grey'
+        backgroundColor: '#5B604A'
     },
     closeMyPokemon: {
         zIndex: '300',
@@ -26,12 +26,21 @@ const styles = {
         right: '0',
         width: '50px',
         transform: 'translateX(120%)'
+    },
+    pokemonLabel: {
+        display: 'block',
+        //fontFamily: 'Pokemon',
+    },
+    addButton: {
+        display: 'block',
+        fontFamily: 'Pokemon',
     }
 };
 
 class PokemonList extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+
         this.state = {
             selectedPokemon: {},
             myPokemon: localStorage.myPokemon ? JSON.parse(localStorage.myPokemon) : [],
@@ -70,10 +79,22 @@ class PokemonList extends Component {
         this.setState({ selectedPokemon: {} })
     };
 
+    checkImageValid = (src) => {
+        let http = new XMLHttpRequest();
+        http.open('HEAD', src, false);
+        http.send();
+
+        if (http.status === 404) {
+            return 'styles/pokemonPlaceholder.png'
+        } else {
+            return src;
+        }
+    };
+
     render() {
         if (this.props.pokemonList.results) {
             return (
-                <div style={{ marginTop: '155px', display: 'flex', flexWrap: 'wrap', marginBottom: '70px' }}>
+                <div style={{ marginTop: '155px', display: 'flex', flexWrap: 'wrap', marginBottom: '20px' }}>
                     {this.props.pokemonList.results.map((item, key) =>
                         <div style={{ maxWidth: '100px' }}>
                             <img
@@ -81,18 +102,22 @@ class PokemonList extends Component {
                                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.url.split('/')[6]}.png`}
                                 onClick={() => this.displayPokemon(item.url)}
                             />
-                            {item.name}
+                            <span style={styles.pokemonLabel}>{item.name}</span>
                             {
-                                !!this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6]) || <button onClick={() => this.addToMyPokemons(item)}>Add</button>
+                                !!this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6]) ||
+                                <button
+                                    onClick={() => this.addToMyPokemons(item)}
+                                    style={styles.addButton}
+                                >
+                                    Add</button>
                             }
-                        </div>)}
+                        </div>)
+                    }
                     <Modal
                         isOpen={this.state.selectedPokemon.abilities}
                         //onAfterOpen={afterOpenFn}
                         //onRequestClose={requestCloseFn}
                         onRequestClose={this.handleRequestCloseFunc}
-                        //closeTimeoutMS={n}
-                        //style={customStyle}
                         contentLabel="Modal"
                     >
                         <h1>{this.state.selectedPokemon.forms ? this.state.selectedPokemon.forms[0].name : ''}</h1>
@@ -129,6 +154,7 @@ class PokemonList extends Component {
                                 <img
                                     key={key}
                                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.url.split('/')[6]}.png`}
+                                    //src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.url.split('/')[6]}.png`}
                                     onClick={() => this.displayPokemon(item.url)}
                                 />
                                 {item.name}

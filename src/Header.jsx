@@ -15,7 +15,22 @@ const styles = {
         fontSize: '25px',
         fontFamily: 'Pokemon',
         top: '0'
-    }
+    },
+    button: {
+        outline: 'none',
+        border: 'none',
+        //borderRadius: '2px',
+        display: 'inline-block',
+        height: '36px',
+        lineHeight: '36px',
+        padding: '0 2rem',
+        textTransform: 'uppercase',
+        float: 'right',
+        backgroundColor: 'black',
+        marginRight: '5px',
+        color: 'white',
+        fontFamily: 'Pokemon',
+    },
 };
 
 class Header extends Component {
@@ -28,7 +43,7 @@ class Header extends Component {
                 Pokedex<br/>
                 <button
                     onClick={() => this.props.showMyPokemon()}
-                    style={{ float: 'right'}}
+                    style={styles.button}
                 >
                     My pokemon
                 </button>
