@@ -46,6 +46,5 @@
     "react-dom": "15.4.2",
     "react-modal": "^1.7.7",
     "react-spinjs": "^3.0.0",
-    "react-spinner": "^0.2.7"
   }
 }
