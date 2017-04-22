@@ -44,6 +44,8 @@
   "dependencies": {
     "react": "15.2.1",
     "react-dom": "15.2.1",
-    "react-modal": "^1.7.7"
+    "react-modal": "^1.7.7",
+    "react-spinjs": "^3.0.0",
+    "react-spinner": "^0.2.7"
   }
 }

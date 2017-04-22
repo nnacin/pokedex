@@ -7,10 +7,10 @@ const styles = {
         justifyContent: 'center',
         textAlign: 'center',
         width: '100%',
-        height: '10px',
+        height: 'auto',
         padding: '20px 0 15px 0',
         fontSize: '20px',
-        position: 'fixed',
+        //position: 'fixed',
         bottom: '0',
         display: 'inline-block',
         fontFamily: 'Pokemon',
@@ -23,7 +23,8 @@ const styles = {
         color: 'black'
     },
     footerIcon: {
-        height: '20px'
+        height: '20px',
+        padding: '0 5px'
     }
 };
 
@@ -33,11 +34,29 @@ class Footer extends Component {
             <footer
                 style={styles.footer}
             >
-                <a href='http://pokeapi.co/' target='_blank' style={styles.footerLink}>Pokéapi</a>
+                <a
+                    href='http://pokeapi.co/'
+                    target='_blank'
+                    style={styles.footerLink}
+                >
+                    Pokéapi
+                </a>
                 <img src='styles/iconPokeball.png' style={styles.footerIcon}/>
-                <a href='http://pokemon.wikia.com/wiki/Pok%C3%A9dex' target='_blank' style={styles.footerLink}>Pokédex</a>
+                <a
+                    href='http://pokemon.wikia.com/wiki/Pok%C3%A9dex'
+                    target='_blank'
+                    style={styles.footerLink}
+                >
+                    Pokédex
+                </a>
                 <img src='styles/iconPokeball.png' style={styles.footerIcon}/>
-                <a href='https://infinum.co/' target='_blank' style={styles.footerLink}>Infinum</a>
+                <a
+                    href='https://infinum.co/'
+                    target='_blank'
+                    style={styles.footerLink}
+                >
+                    Infinum
+                </a>
             </footer>
         );
     }

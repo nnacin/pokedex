@@ -14,7 +14,8 @@ const styles = {
         padding: '20px 0',
         fontSize: '25px',
         fontFamily: 'Pokemon',
-        top: '0'
+        top: '0',
+        zIndex: '3'
     },
     button: {
         outline: 'none',

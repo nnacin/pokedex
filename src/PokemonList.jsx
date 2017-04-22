@@ -1,9 +1,49 @@
 import React, {Component} from 'react';
 import Modal from 'react-modal';
+//import Spinner from "./Spinner.jsx";
+import Spinner from 'react-spinner';
+import ReactSpinner from 'react-spinjs';
 
+const style = {
+    //height: 50,
+    width: 50,
+    //backgroundColor: 'black',
+    marginTop: '195px',
+    //height: '90%',
+    height: 'calc(100vh - 50px)'
+    //minHeight: '100%',
+    //display: 'flex',
+    //flexDirection: 'column'
+};
 const styles = {
+    modal: {
+        overlay : {
+            position          : 'fixed',
+            top               : 0,
+            left              : 0,
+            right             : 0,
+            bottom            : 0,
+            backgroundColor   : 'rgba(255, 255, 255, 0.75)',
+            zIndex: '4'
+        },
+        content : {
+            position                   : 'absolute',
+            top                        : '40px',
+            left                       : '40px',
+            right                      : '40px',
+            bottom                     : '40px',
+            border                     : '1px solid #ccc',
+            background                 : '#fff',
+            overflow                   : 'auto',
+            WebkitOverflowScrolling    : 'touch',
+            borderRadius               : '4px',
+            outline                    : 'none',
+            padding                    : '20px',
+            zIndex: '4'
+        }
+    },
     openMyPokemon: {
-        zIndex: '1',
+        zIndex: '4',
         position: 'fixed',
         top: '0',
         bottom: '0',
@@ -11,9 +51,9 @@ const styles = {
         willChange: 'transform',
         overflowY: 'auto',
         right: '0',
-        width: '150px',
+        width: '25%',
         transform: 'translateX(0%)',
-        backgroundColor: '#5B604A'
+        backgroundColor: '#5B604A',
     },
     closeMyPokemon: {
         zIndex: '300',
@@ -29,11 +69,63 @@ const styles = {
     },
     pokemonLabel: {
         display: 'block',
+        textAlign: 'center'
         //fontFamily: 'Pokemon',
     },
     addButton: {
         display: 'block',
         fontFamily: 'Pokemon',
+        width: '100%',
+        borderRadius: 'none',
+        height: '25px',
+        outline: 'none',
+        border: 'none',
+        //borderRadius: '2px',
+        //lineHeight: '36px',
+        //padding: '0 2rem',
+        cursor: 'pointer'
+    },
+    addButtonDisabled : {
+        display: 'block',
+        fontFamily: 'Pokemon',
+        width: '100%',
+        borderRadius: 'none',
+        height: '25px',
+        cursor: 'not-allowed',
+        opacity: '0.3'
+    },
+    image: {
+        cursor: 'pointer'
+    },
+    removeButton: {
+        display: 'block',
+        fontFamily: 'Pokemon',
+        //width: '100%',
+        borderRadius: 'none',
+        outline: 'none',
+        width: '100%',
+        height: '25px',
+        backgroundColor: '#DD092F',
+        opacity: '0.3',
+        border: 'none'
+    },
+    pokemon: {
+        maxWidth: '120px',
+        border: '4px solid gray',
+        minHeight: '160px',
+        margin: '5px 5px'
+    },
+    myPokemon: {
+        textAlign: 'center',
+        //maxWidth: '100px'
+    },
+    closeButton: {
+        all: 'unset',
+        cursor: 'pointer',
+        float: 'right',
+        padding: '0 5px',
+        color: 'white',
+        fontFamily: 'Helvetica, Sans-Serif'
     }
 };
 
@@ -94,20 +186,24 @@ class PokemonList extends Component {
     render() {
         if (this.props.pokemonList.results) {
             return (
-                <div style={{ marginTop: '155px', display: 'flex', flexWrap: 'wrap', marginBottom: '20px' }}>
+                <div style={{  minHeight: '100vh', height: 'auto', marginTop: '185px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', alignItems: 'center' }}>
                     {this.props.pokemonList.results.map((item, key) =>
-                        <div style={{ maxWidth: '100px' }}>
+                        <div style={styles.pokemon}>
                             <img
                                 key={key}
+                                style={styles.image}
                                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.url.split('/')[6]}.png`}
                                 onClick={() => this.displayPokemon(item.url)}
                             />
                             <span style={styles.pokemonLabel}>{item.name}</span>
+                            <br/>
                             {
-                                !!this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6]) ||
+                                //!!this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6]) ||
                                 <button
-                                    onClick={() => this.addToMyPokemons(item)}
-                                    style={styles.addButton}
+                                    onClick={() => !!this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6]) || this.addToMyPokemons(item)}
+                                    style={this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6]) ? styles.addButtonDisabled : styles.addButton}
+                                    //disabled={this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6])}
+                                    title={this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6]) ? 'Already in My pokemon list.' : ''}
                                 >
                                     Add</button>
                             }
@@ -118,6 +214,7 @@ class PokemonList extends Component {
                         //onAfterOpen={afterOpenFn}
                         //onRequestClose={requestCloseFn}
                         onRequestClose={this.handleRequestCloseFunc}
+                        style={styles.modal}
                         contentLabel="Modal"
                     >
                         <h1>{this.state.selectedPokemon.forms ? this.state.selectedPokemon.forms[0].name : ''}</h1>
@@ -129,7 +226,7 @@ class PokemonList extends Component {
                         //onAfterOpen={afterOpenFn}
                         onRequestClose={this.props.requestCloseFn}
                         //closeTimeoutMS={n}
-                        //style={customStyle}
+                        style={styles.modal}
                         contentLabel="Modal"
                     >
                         {this.state.myPokemon.map((item, key) =>
@@ -148,25 +245,45 @@ class PokemonList extends Component {
                     <div
                     style={this.props.showMyPokemon ? styles.openMyPokemon : styles.closeMyPokemon}
                     >
-                        <button onClick={this.props.requestCloseFn}>Close</button>
+                        <button
+                            onClick={this.props.requestCloseFn}
+                            style={styles.closeButton}
+                        >
+                            X
+                        </button>
                         {this.state.myPokemon.map((item, key) =>
-                            <div style={{ maxWidth: '100px' }}>
+                            <div style={styles.myPokemon}>
                                 <img
                                     key={key}
+                                    style={styles.image}
                                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.url.split('/')[6]}.png`}
                                     //src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.url.split('/')[6]}.png`}
                                     onClick={() => this.displayPokemon(item.url)}
                                 />
-                                {item.name}
+                                <span style={styles.pokemonLabel}>
+                                    {item.name}
+                                </span>
 
-                                <button onClick={() => this.removePokemon(item)}>Remove</button>
+                                <button
+                                    style={styles.removeButton}
+                                    onClick={() => this.removePokemon(item)}>Remove</button>
 
                             </div>)}
                     </div>
                 </div>
             );
         } else {
-            return null;
+            const configObject ={
+                width: 10,
+                radius: 25,
+                length: 20
+            };
+            return <div style={style}>
+                <ReactSpinner
+                    //width=250
+                    config={configObject}
+                />
+            </div>
         }
     }
 }

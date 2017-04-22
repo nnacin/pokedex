@@ -14,6 +14,8 @@ const style = {
         padding: '0 2rem',
         textTransform: 'uppercase',
         fontFamily: 'Pokemon',
+        marginTop: '5px',
+        cursor: 'pointer'
     },
     previousButton: {
         width: '50%',
@@ -33,7 +35,7 @@ class App extends Component {
         this.state = {
             pokemon: [],
             showMyPokemon: false,
-            url: 'http://pokeapi.co/api/v2/pokemon/?limit=15'
+            url: 'http://pokeapi.co/api/v2/pokemon/?limit=25'
         };
     }
 
@@ -64,7 +66,6 @@ class App extends Component {
                     <button
                         onClick={()=> this.setState({ url: this.state.pokemon.previous }, this.goTo)}
                         style={Object.assign(style.previousButton, style.button)}
-                        //style={style.previousButton}
                     >
                         &lt;&lt; Previous
                     </button>
@@ -73,12 +74,10 @@ class App extends Component {
                     <button
                         onClick={()=> this.setState({ url: this.state.pokemon.next }, this.goTo)}
                         style={Object.assign(style.nextButton, style.button)}
-                        //style={style.nextButton}
                     >
                         Next >>
                     </button>
                 }
-
                 <Footer />
             </div>
         );
