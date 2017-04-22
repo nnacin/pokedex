@@ -27,11 +27,11 @@ const styles = {
             zIndex: '4'
         },
         content : {
-            position                   : 'absolute',
+            //position                   : 'absolute',
             top                        : '40px',
             left                       : '40px',
             right                      : '40px',
-            bottom                     : '40px',
+            //bottom                     : '40px',
             border                     : '1px solid #ccc',
             background                 : '#fff',
             overflow                   : 'auto',
@@ -39,7 +39,9 @@ const styles = {
             borderRadius               : '4px',
             outline                    : 'none',
             padding                    : '20px',
-            zIndex: '4'
+            zIndex: '4',
+            height: 'auto',
+            fontFamily: 'Helvetica, Sans-Serif'
         }
     },
     openMyPokemon: {
@@ -209,6 +211,7 @@ class PokemonList extends Component {
                             }
                         </div>)
                     }
+                    {!this.state.selectedPokemon.abilities ||
                     <Modal
                         isOpen={this.state.selectedPokemon.abilities}
                         //onAfterOpen={afterOpenFn}
@@ -217,9 +220,23 @@ class PokemonList extends Component {
                         style={styles.modal}
                         contentLabel="Modal"
                     >
-                        <h1>{this.state.selectedPokemon.forms ? this.state.selectedPokemon.forms[0].name : ''}</h1>
-                        <p>Etc.</p>
+
+
+                        <div>
+                            {console.log(this.state.selectedPokemon.abilities)}
+                            <h1>{this.state.selectedPokemon.forms ?
+                                this.state.selectedPokemon.forms[0].name.charAt(0).toUpperCase() + this.state.selectedPokemon.forms[0].name.substr(1).toLowerCase() :
+                                ''}</h1>
+                            <p>
+                                <b>Abilities:</b>
+                                {!this.state.selectedPokemon.abilities || this.state.selectedPokemon.abilities.forEach((node) => <p>test</p>
+                                )}
+                            </p>
+                            <p>Weight</p>
+
+                        </div>
                     </Modal>
+                    }
                     <Modal
                         isOpen={false}
                         //isOpen={this.props.showMyPokemon}
