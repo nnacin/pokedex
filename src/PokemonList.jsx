@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 //import Spinner from "./Spinner.jsx";
 import Spinner from 'react-spinner';
 import ReactSpinner from 'react-spinjs';
+import Pokemon from './Pokemon.jsx';
 
 const style = {
     //height: 50,
@@ -190,9 +191,8 @@ class PokemonList extends Component {
             return (
                 <div style={{  minHeight: '100vh', height: 'auto', marginTop: '185px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', alignItems: 'center' }}>
                     {this.props.pokemonList.results.map((item, key) =>
-                        <div style={styles.pokemon}>
+                        <div style={styles.pokemon} key={key}>
                             <img
-                                key={key}
                                 style={styles.image}
                                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.url.split('/')[6]}.png`}
                                 onClick={() => this.displayPokemon(item.url)}
@@ -212,53 +212,12 @@ class PokemonList extends Component {
                         </div>)
                     }
                     {!this.state.selectedPokemon.abilities ||
-                    <Modal
-                        isOpen={this.state.selectedPokemon.abilities}
-                        //onAfterOpen={afterOpenFn}
-                        //onRequestClose={requestCloseFn}
-                        onRequestClose={this.handleRequestCloseFunc}
-                        style={styles.modal}
-                        contentLabel="Modal"
-                    >
+                        <Pokemon
+                            selectedPokemon={this.state.selectedPokemon}
+                            handleRequestCloseFunc={() => this.setState({ selectedPokemon: {} })}
+                        />
 
-
-                        <div>
-                            {console.log(this.state.selectedPokemon.abilities)}
-                            <h1>{this.state.selectedPokemon.forms ?
-                                this.state.selectedPokemon.forms[0].name.charAt(0).toUpperCase() + this.state.selectedPokemon.forms[0].name.substr(1).toLowerCase() :
-                                ''}</h1>
-                            <p>
-                                <b>Abilities:</b>
-                                {!this.state.selectedPokemon.abilities || this.state.selectedPokemon.abilities.forEach((node) => <p>test</p>
-                                )}
-                            </p>
-                            <p>Weight</p>
-
-                        </div>
-                    </Modal>
                     }
-                    <Modal
-                        isOpen={false}
-                        //isOpen={this.props.showMyPokemon}
-                        //onAfterOpen={afterOpenFn}
-                        onRequestClose={this.props.requestCloseFn}
-                        //closeTimeoutMS={n}
-                        style={styles.modal}
-                        contentLabel="Modal"
-                    >
-                        {this.state.myPokemon.map((item, key) =>
-                            <div style={{ maxWidth: '100px' }}>
-                                <img
-                                    key={key}
-                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.url.split('/')[6]}.png`}
-                                    onClick={() => this.displayPokemon(item.url)}
-                                />
-                                {item.name}
-
-                                    <button onClick={() => this.removePokemon(item)}>Remove</button>
-
-                            </div>)}
-                    </Modal>
                     <div
                     style={this.props.showMyPokemon ? styles.openMyPokemon : styles.closeMyPokemon}
                     >
@@ -269,9 +228,8 @@ class PokemonList extends Component {
                             X
                         </button>
                         {this.state.myPokemon.map((item, key) =>
-                            <div style={styles.myPokemon}>
+                            <div style={styles.myPokemon} key={key}>
                                 <img
-                                    key={key}
                                     style={styles.image}
                                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.url.split('/')[6]}.png`}
                                     //src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.url.split('/')[6]}.png`}
