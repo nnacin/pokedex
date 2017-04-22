@@ -3,11 +3,10 @@ import Header from './Header.jsx';
 import Footer from './Footer.jsx';
 import PokemonList from './PokemonList.jsx';
 
-const style = {
+const styles = {
     button: {
         outline: 'none',
         border: 'none',
-        //borderRadius: '2px',
         display: 'inline-block',
         height: '36px',
         lineHeight: '36px',
@@ -65,7 +64,7 @@ class App extends Component {
                 {!this.state.pokemon.previous ||
                     <button
                         onClick={()=> this.setState({ url: this.state.pokemon.previous }, this.goTo)}
-                        style={Object.assign(style.previousButton, style.button)}
+                        style={Object.assign(styles.previousButton, styles.button)}
                     >
                         &lt;&lt; Previous
                     </button>
@@ -73,7 +72,7 @@ class App extends Component {
                 {!this.state.pokemon.next ||
                     <button
                         onClick={()=> this.setState({ url: this.state.pokemon.next }, this.goTo)}
-                        style={Object.assign(style.nextButton, style.button)}
+                        style={Object.assign(styles.nextButton, styles.button)}
                     >
                         Next >>
                     </button>

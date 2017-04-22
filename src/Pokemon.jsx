@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import Modal from 'react-modal';
 import '../styles/fonts.scss';
 
@@ -37,24 +37,22 @@ const styles = {
 
 class Pokemon extends Component {
 
-
-    displaySettings = (pokemon, setting, options) => {
+    displaySettings = (key, pokemon, setting, options) => {
          if (options) {
-             return <li key={pokemon.id}>{pokemon[setting].name} (&nbsp;
-                 {options.map((option) => <span>{option}: {pokemon[option]}&nbsp;</span>)})
+             return <li key={key}>{pokemon[setting].name} (&nbsp;
+                 {options.map((option, key) => <span key={key}>{option}: {pokemon[option]}&nbsp;</span>)})
                     </li>
          } else {
-            return <li key={pokemon.id}>{pokemon[setting].name}</li>
+            return <li key={key}>{pokemon[setting].name}</li>
          }
     };
 
     render() {
         const { selectedPokemon: pokemon } = this.props;
 
-        console.log(pokemon)
         return (
             <Modal
-                isOpen={pokemon}
+                isOpen={!!pokemon}
                 onRequestClose={this.props.handleRequestCloseFunc}
                 style={styles.modal}
                 contentLabel="Modal"
@@ -80,26 +78,32 @@ class Pokemon extends Component {
                 </p>
                 <p>
                     <b>Abilities: </b>
-                    {pokemon.abilities.map((node) => this.displaySettings(node, 'ability'))}
+                    {pokemon.abilities.map((node, key) => this.displaySettings(key, node, 'ability'))}
                 </p>
                 <p>
                     <b>Types: </b>
-                    {pokemon.types.map((node) => this.displaySettings(node, 'type'))}
+                    {pokemon.types.map((node, key) => this.displaySettings(key, node, 'type'))}
                 </p>
                 <p>
                     <b>Stats: </b>
-                    {pokemon.stats.map((node) => this.displaySettings(node, 'stat', ['base_stat', 'effort']))}
+                    {pokemon.stats.map((node, key) => this.displaySettings(key, node, 'stat', ['base_stat', 'effort']))}
                 </p>
                 <p>
                     <b>Held items: </b>
-                    {pokemon.held_items.map((node) => this.displaySettings(node, 'item'))}
+                    {pokemon.held_items.map((node, key) => this.displaySettings(key, node, 'item'))}
                 </p>
                 <p>
                     <b>Moves: </b>
-                    {pokemon.moves.map((node) => this.displaySettings(node, 'move'))}
+                    {pokemon.moves.map((node, key) => this.displaySettings(key, node, 'move'))}
                 </p>
             </Modal>
         );
     }
 }
+
+Pokemon.propTypes = {
+    selectedPokemon: PropTypes.object,
+    handleRequestCloseFunc: PropTypes.func
+};
+
 export default Pokemon;

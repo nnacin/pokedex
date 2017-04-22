@@ -1,50 +1,8 @@
-import React, {Component} from 'react';
-import Modal from 'react-modal';
-//import Spinner from "./Spinner.jsx";
-import Spinner from 'react-spinner';
+import React, {Component, PropTypes} from 'react';
 import ReactSpinner from 'react-spinjs';
 import Pokemon from './Pokemon.jsx';
 
-const style = {
-    //height: 50,
-    width: 50,
-    //backgroundColor: 'black',
-    marginTop: '195px',
-    //height: '90%',
-    height: 'calc(100vh - 50px)'
-    //minHeight: '100%',
-    //display: 'flex',
-    //flexDirection: 'column'
-};
 const styles = {
-    modal: {
-        overlay : {
-            position          : 'fixed',
-            top               : 0,
-            left              : 0,
-            right             : 0,
-            bottom            : 0,
-            backgroundColor   : 'rgba(255, 255, 255, 0.75)',
-            zIndex: '4'
-        },
-        content : {
-            //position                   : 'absolute',
-            top                        : '40px',
-            left                       : '40px',
-            right                      : '40px',
-            //bottom                     : '40px',
-            border                     : '1px solid #ccc',
-            background                 : '#fff',
-            overflow                   : 'auto',
-            WebkitOverflowScrolling    : 'touch',
-            borderRadius               : '4px',
-            outline                    : 'none',
-            padding                    : '20px',
-            zIndex: '4',
-            height: 'auto',
-            fontFamily: 'Helvetica, Sans-Serif'
-        }
-    },
     openMyPokemon: {
         zIndex: '4',
         position: 'fixed',
@@ -73,7 +31,6 @@ const styles = {
     pokemonLabel: {
         display: 'block',
         textAlign: 'center'
-        //fontFamily: 'Pokemon',
     },
     addButton: {
         display: 'block',
@@ -83,9 +40,6 @@ const styles = {
         height: '25px',
         outline: 'none',
         border: 'none',
-        //borderRadius: '2px',
-        //lineHeight: '36px',
-        //padding: '0 2rem',
         cursor: 'pointer'
     },
     addButtonDisabled : {
@@ -103,7 +57,6 @@ const styles = {
     removeButton: {
         display: 'block',
         fontFamily: 'Pokemon',
-        //width: '100%',
         borderRadius: 'none',
         outline: 'none',
         width: '100%',
@@ -120,7 +73,6 @@ const styles = {
     },
     myPokemon: {
         textAlign: 'center',
-        //maxWidth: '100px'
     },
     closeButton: {
         all: 'unset',
@@ -170,10 +122,6 @@ class PokemonList extends Component {
         localStorage.setItem("myPokemon", JSON.stringify(pokemonArray));
     };
 
-    handleRequestCloseFunc = () => {
-        this.setState({ selectedPokemon: {} })
-    };
-
     checkImageValid = (src) => {
         let http = new XMLHttpRequest();
         http.open('HEAD', src, false);
@@ -204,7 +152,6 @@ class PokemonList extends Component {
                                 <button
                                     onClick={() => !!this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6]) || this.addToMyPokemons(item)}
                                     style={this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6]) ? styles.addButtonDisabled : styles.addButton}
-                                    //disabled={this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6])}
                                     title={this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6]) ? 'Already in My pokemon list.' : ''}
                                 >
                                     Add</button>
@@ -232,7 +179,6 @@ class PokemonList extends Component {
                                 <img
                                     style={styles.image}
                                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.url.split('/')[6]}.png`}
-                                    //src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.url.split('/')[6]}.png`}
                                     onClick={() => this.displayPokemon(item.url)}
                                 />
                                 <span style={styles.pokemonLabel}>
@@ -253,13 +199,15 @@ class PokemonList extends Component {
                 radius: 25,
                 length: 20
             };
-            return <div style={style}>
-                <ReactSpinner
-                    //width=250
-                    config={configObject}
-                />
-            </div>
+            return <div style={style}><ReactSpinner config={configObject} /></div>
         }
     }
 }
+
+Pokemon.PokemonList = {
+    pokemonList: PropTypes.array,
+    showMyPokemon: PropTypes.bool,
+    requestCloseFn: PropTypes.func,
+};
+
 export default PokemonList;

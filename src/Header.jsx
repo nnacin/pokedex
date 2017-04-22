@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import '../styles/fonts.scss';
 
 const styles = {
@@ -20,7 +20,6 @@ const styles = {
     button: {
         outline: 'none',
         border: 'none',
-        //borderRadius: '2px',
         display: 'inline-block',
         height: '36px',
         lineHeight: '36px',
@@ -37,9 +36,7 @@ const styles = {
 class Header extends Component {
     render() {
         return (
-            <header
-                style={styles.header}
-            >
+            <header style={styles.header}>
                 Pokémon Encyclopedia<br /><br/>
                 Pokedex<br/>
                 <button
@@ -52,4 +49,9 @@ class Header extends Component {
         );
     }
 }
+
+Header.PokemonList = {
+    showMyPokemon: PropTypes.func,
+};
+
 export default Header;

@@ -10,7 +10,6 @@ const styles = {
         height: 'auto',
         padding: '20px 0 15px 0',
         fontSize: '20px',
-        //position: 'fixed',
         bottom: '0',
         display: 'inline-block',
         fontFamily: 'Pokemon',
@@ -31,9 +30,7 @@ const styles = {
 class Footer extends Component {
     render() {
         return (
-            <footer
-                style={styles.footer}
-            >
+            <footer style={styles.footer}>
                 <a
                     href='http://pokeapi.co/'
                     target='_blank'
