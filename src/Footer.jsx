@@ -12,7 +12,6 @@ const styles = {
         fontSize: '20px',
         position: 'fixed',
         bottom: '0',
-        //marginLeft: '-8px',
         display: 'inline-block'
     }
 };

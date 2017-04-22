@@ -2,39 +2,53 @@ import React, {Component} from 'react';
 import Header from './Header.jsx';
 import Footer from './Footer.jsx';
 import PokemonList from './PokemonList.jsx';
-import Modal from 'react-modal';
-
 
 class App extends Component {
     constructor() {
         super();
         this.state = {
-            items: [],
-            openMyPokemons: false
+            pokemon: [],
+            showMyPokemon: false,
+            url: 'http://pokeapi.co/api/v2/pokemon?limit=20'
         };
     }
 
     componentWillMount() {
-        fetch('http://pokeapi.co/api/v2/pokemon?limit=30')
-            .then(result=>result.json())
-            .then(items=>this.setState({items}))
+        fetch(this.state.url)
+            .then(result => result.json())
+            .then(pokemon => this.setState({ pokemon }))
     }
 
-  render() {
-    return (
-        <div>
-            <Header
-                openMyPokemons={() => this.setState({ openMyPokemons: true})}
-            />
-            <PokemonList
-                pokemons={this.state.items}
-                openMyPokemons={this.state.openMyPokemons}
-                requestCloseFn={() => this.setState({ openMyPokemons: false})}
+    goTo = () => {
+        fetch(this.state.url)
+            .then(result => result.json())
+            .then(pokemon => this.setState({ pokemon }))
+    };
 
-            />
-            <Footer />
-        </div>
-    );
-  }
+    render() {
+        return (
+            <div>
+                <Header
+                    showMyPokemon={() => this.setState({ showMyPokemon: true})}
+                />
+                <PokemonList
+                    pokemonList={this.state.pokemon}
+                    showMyPokemon={this.state.showMyPokemon}
+                    requestCloseFn={() => this.setState({ showMyPokemon: false})}
+                />
+                {!this.state.pokemon.previous ||
+                    <button onClick={()=> this.setState({ url: this.state.pokemon.previous }, this.goTo)}>
+                        Previous
+                    </button>
+                }
+                {!this.state.pokemon.next ||
+                    <button onClick={()=> this.setState({ url: this.state.pokemon.next }, this.goTo)}>
+                        Next
+                    </button>
+                }
+                <Footer />
+            </div>
+        );
+    }
 }
 export default App;

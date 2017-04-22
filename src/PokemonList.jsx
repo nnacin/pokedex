@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import Modal from 'react-modal';
 
 const styles = {
-    openSidebar: {
+    openMyPokemon: {
         zIndex: '300',
-
         position: 'fixed',
         top: '0',
         bottom: '0',
@@ -12,13 +11,12 @@ const styles = {
         willChange: 'transform',
         overflowY: 'auto',
         right: '0',
-        width: '50px',
+        width: '100px',
         transform: 'translateX(0%)',
         backgroundColor: 'grey'
     },
-    closeSidebar: {
+    closeMyPokemon: {
         zIndex: '300',
-
         position: 'fixed',
         top: '0',
         bottom: '0',
@@ -35,59 +33,48 @@ class PokemonList extends Component {
     constructor() {
         super();
         this.state = {
-            pokemon: {},
-            myPokemons: localStorage.pokemons ? JSON.parse(localStorage.pokemons) : [],
-            showMyPokemons: false
+            selectedPokemon: {},
+            myPokemon: localStorage.myPokemon ? JSON.parse(localStorage.myPokemon) : [],
+            showMyPokemon: false
         }
     }
 
-    displayPokemon(url) {
+    displayPokemon = (url) => {
         fetch(url)
             .then(result=>result.json())
-            .then(item=>this.setState({pokemon: item}))
-    }
+            .then(pokemon => this.setState({ selectedPokemon: pokemon }))
+    };
 
-    addToMyPokemons (pokemon) {
+    addToMyPokemons = (pokemon) => {
         const id = pokemon.url.split('/')[6];
-        if (!this.state.myPokemons.find((pok) => pok.id === id)) {
+        if (!this.state.myPokemon.find((pok) => pok.id === id)) {
             const newPokemon = {
                 id,
                 name: pokemon.name,
                 url: pokemon.url
             };
-            //var newPokemon  = {}
-            //newPokemon[id] = pokemon
-            //let newPokemon[id] = pokemon;
-            const oldArray = this.state.myPokemons;
-            oldArray.push(newPokemon)
-            this.setState({myPokemons: oldArray})
-            localStorage.setItem("pokemons", JSON.stringify(oldArray));
+            const pokemonArray = this.state.myPokemon;
+            pokemonArray.push(newPokemon);
+            this.setState({ myPokemon: pokemonArray });
+            localStorage.setItem("myPokemon", JSON.stringify(pokemonArray));
         }
-    }
+    };
 
-    removePokemon(pokemon) {
-        console.log(this.state.myPokemons.find((pok) => pok.id === pokemon.id))
-        const myArray = this.state.myPokemons.filter(function( pok ) {
-            return pok.id !== pokemon.id;
-        });
-        console.log(myArray)
-        this.setState({myPokemons: myArray})
-        localStorage.setItem("pokemons", JSON.stringify(myArray));
-
-
-    }
+    removePokemon = (pokemon) => {
+        const pokemonArray = this.state.myPokemon.filter((pok) => pok.id !== pokemon.id);
+        this.setState({ myPokemon: pokemonArray });
+        localStorage.setItem("myPokemon", JSON.stringify(pokemonArray));
+    };
 
     handleRequestCloseFunc = () => {
-        this.setState({ pokemon: {}})
-    }
+        this.setState({ selectedPokemon: {} })
+    };
 
     render() {
-        console.log('this.props', this.props);
-        console.log('this.state', this.state);
-        if (this.props.pokemons.results) {
+        if (this.props.pokemonList.results) {
             return (
                 <div style={{ marginTop: '155px', display: 'flex', flexWrap: 'wrap', marginBottom: '70px' }}>
-                    {this.props.pokemons.results.map((item, key) =>
+                    {this.props.pokemonList.results.map((item, key) =>
                         <div style={{ maxWidth: '100px' }}>
                             <img
                                 key={key}
@@ -96,11 +83,11 @@ class PokemonList extends Component {
                             />
                             {item.name}
                             {
-                                !!this.state.myPokemons.find((pok) => pok.id===item.url.split('/')[6]) || <button onClick={() => this.addToMyPokemons(item)}>Add</button>
+                                !!this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6]) || <button onClick={() => this.addToMyPokemons(item)}>Add</button>
                             }
                         </div>)}
                     <Modal
-                        isOpen={this.state.pokemon.abilities}
+                        isOpen={this.state.selectedPokemon.abilities}
                         //onAfterOpen={afterOpenFn}
                         //onRequestClose={requestCloseFn}
                         onRequestClose={this.handleRequestCloseFunc}
@@ -108,19 +95,19 @@ class PokemonList extends Component {
                         //style={customStyle}
                         contentLabel="Modal"
                     >
-                        <h1>{this.state.pokemon.forms ? this.state.pokemon.forms[0].name : ''}</h1>
+                        <h1>{this.state.selectedPokemon.forms ? this.state.selectedPokemon.forms[0].name : ''}</h1>
                         <p>Etc.</p>
                     </Modal>
                     <Modal
                         isOpen={false}
-                        //isOpen={this.props.openMyPokemons}
+                        //isOpen={this.props.showMyPokemon}
                         //onAfterOpen={afterOpenFn}
                         onRequestClose={this.props.requestCloseFn}
                         //closeTimeoutMS={n}
                         //style={customStyle}
                         contentLabel="Modal"
                     >
-                        {this.state.myPokemons.map((item, key) =>
+                        {this.state.myPokemon.map((item, key) =>
                             <div style={{ maxWidth: '100px' }}>
                                 <img
                                     key={key}
@@ -134,10 +121,21 @@ class PokemonList extends Component {
                             </div>)}
                     </Modal>
                     <div
-                    style={this.props.openMyPokemons ? styles.openSidebar : styles.closeSidebar}
+                    style={this.props.showMyPokemon ? styles.openMyPokemon : styles.closeMyPokemon}
                     >
                         <button onClick={this.props.requestCloseFn}>Close</button>
-                        test
+                        {this.state.myPokemon.map((item, key) =>
+                            <div style={{ maxWidth: '100px' }}>
+                                <img
+                                    key={key}
+                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.url.split('/')[6]}.png`}
+                                    onClick={() => this.displayPokemon(item.url)}
+                                />
+                                {item.name}
+
+                                <button onClick={() => this.removePokemon(item)}>Remove</button>
+
+                            </div>)}
                     </div>
                 </div>
             );
