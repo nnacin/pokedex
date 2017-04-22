@@ -115,7 +115,7 @@ class PokemonList extends Component {
             .then(pokemon => this.setState({ selectedPokemon: pokemon }))
     };
 
-    addToMyPokemons = (pokemon) => {
+    addToMyPokemon = (pokemon) => {
         const id = pokemon.url.split('/')[6];
         if (!this.state.myPokemon.find((pok) => pok.id === id)) {
             const newPokemon = {
@@ -130,7 +130,7 @@ class PokemonList extends Component {
         }
     };
 
-    removePokemon = (pokemon) => {
+    removeFromMyPokemon = (pokemon) => {
         const pokemonArray = this.state.myPokemon.filter((pok) => pok.id !== pokemon.id);
         this.setState({ myPokemon: pokemonArray });
         localStorage.setItem("myPokemon", JSON.stringify(pokemonArray));
@@ -148,29 +148,47 @@ class PokemonList extends Component {
         }
     };
 
+    renderPokemon = (key, pokemon) => {
+        return (
+            <div style={styles.pokemon} key={key}>
+                <img
+                    style={styles.image}
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`}
+                    onClick={() => this.displayPokemon(pokemon.url)}
+                />
+                <span style={styles.pokemonLabel}>{pokemon.name}</span>
+                <br/>
+                {<button
+                    onClick={() => !!this.state.myPokemon.find((pok) => pok.id === pokemon.url.split('/')[6]) || this.addToMyPokemon(pokemon)}
+                    style={this.state.myPokemon.find((pok) => pok.id === pokemon.url.split('/')[6]) ? styles.addButtonDisabled : styles.addButton}
+                    title={this.state.myPokemon.find((pok) => pok.id === pokemon.url.split('/')[6]) ? 'Already in My pokemon list.' : ''}
+                >
+                    Add
+                </button>}
+            </div>
+        )
+    };
+
+    renderMyPokemon = (key, myPokemon) => {
+        return (
+            <div style={styles.myPokemon} key={key}>
+                <img
+                    style={styles.image}
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${myPokemon.url.split('/')[6]}.png`}
+                    onClick={() => this.displayPokemon(myPokemon.url)}
+                />
+                <span style={styles.pokemonLabel}>{myPokemon.name}</span>
+                <button style={styles.removeButton} onClick={() => this.removeFromMyPokemon(myPokemon)}>Remove</button>
+            </div>
+        )
+    };
+
     render() {
         if (this.props.pokemonList.results) {
             return (
                 <div style={styles.pokemonList}>
-                    {this.props.pokemonList.results.map((item, key) =>
-                        <div style={styles.pokemon} key={key}>
-                            <img
-                                style={styles.image}
-                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.url.split('/')[6]}.png`}
-                                onClick={() => this.displayPokemon(item.url)}
-                            />
-                            <span style={styles.pokemonLabel}>{item.name}</span>
-                            <br/>
-                            {   <button
-                                    onClick={() => !!this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6]) || this.addToMyPokemons(item)}
-                                    style={this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6]) ? styles.addButtonDisabled : styles.addButton}
-                                    title={this.state.myPokemon.find((pok) => pok.id===item.url.split('/')[6]) ? 'Already in My pokemon list.' : ''}
-                                >
-                                    Add
-                                </button>
-                            }
-                        </div>)
-                    }
+                    {this.props.pokemonList.results.map((pokemon, key) => this.renderPokemon(key, pokemon))}
+
                     {!this.state.selectedPokemon.name ||
                         <Pokemon
                             selectedPokemon={this.state.selectedPokemon}
@@ -179,18 +197,7 @@ class PokemonList extends Component {
                     }
                     <div style={this.props.showMyPokemon ? styles.openMyPokemon : styles.closeMyPokemon}>
                         <button onClick={this.props.requestCloseFn} style={styles.closeButton}>X</button>
-                        {this.state.myPokemon.map((item, key) =>
-                            <div style={styles.myPokemon} key={key}>
-                                <img
-                                    style={styles.image}
-                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.url.split('/')[6]}.png`}
-                                    onClick={() => this.displayPokemon(item.url)}
-                                />
-                                <span style={styles.pokemonLabel}>
-                                    {item.name}
-                                </span>
-                                <button style={styles.removeButton} onClick={() => this.removePokemon(item)}>Remove</button>
-                            </div>)}
+                        {this.state.myPokemon.map((pokemon, key) => this.renderMyPokemon(key, pokemon))}
                     </div>
                 </div>
             );
