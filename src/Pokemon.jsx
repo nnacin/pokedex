@@ -98,10 +98,12 @@ class Pokemon extends Component {
                     <b>Stats: </b>
                     {pokemon.stats.map((node, key) => this.displaySettings(key, node, 'stat', ['base_stat', 'effort']))}
                 </p>
-                <p>
-                    <b>Held items: </b>
-                    {pokemon.held_items.map((node, key) => this.displaySettings(key, node, 'item'))}
-                </p>
+                {!pokemon.held_items.length ||
+                    <p>
+                        <b>Held items: </b>
+                        {pokemon.held_items.map((node, key) => this.displaySettings(key, node, 'item'))}
+                    </p>
+                }
                 <p>
                     <b>Moves: </b>
                     {pokemon.moves.map((node, key) => this.displaySettings(key, node, 'move'))}
