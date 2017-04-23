@@ -95,6 +95,13 @@ const styles = {
         width: 50,
         marginTop: '195px',
         height: 'calc(100vh - 50px)'
+    },
+    title: {
+        color: '#DD092F',
+        fontFamily: 'Pokemon',
+        fontSize: '12px',
+        paddingTop: '15px',
+        paddingLeft: '15px'
     }
 };
 
@@ -197,6 +204,7 @@ class PokemonList extends Component {
                     }
                     <div style={this.props.showMyPokemon ? styles.openMyPokemon : styles.closeMyPokemon}>
                         <button onClick={this.props.requestCloseFn} style={styles.closeButton}>X</button>
+                        <h2 style={styles.title}>My pokemon</h2>
                         {this.state.myPokemon.map((pokemon, key) => this.renderMyPokemon(key, pokemon))}
                     </div>
                 </div>
