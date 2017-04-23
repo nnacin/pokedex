@@ -187,6 +187,7 @@ class PokemonList extends Component {
             <div style={styles.pokemon} key={key}>
                 <img
                     style={styles.image}
+                    // src={this.checkImageValid(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`)}
                     src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[6]}.png`}
                     onClick={() => this.displayPokemon(pokemon.url)}
                 />
