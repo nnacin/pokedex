@@ -32,7 +32,16 @@ const styles = {
     title: {
         color: '#DD092F',
         fontFamily: 'Pokemon',
-    }
+    },
+    closeButton: {
+        all: 'unset',
+        cursor: 'pointer',
+        float: 'right',
+        padding: '0 5px',
+        color: '#DD092F',
+        fontFamily: 'Helvetica, Sans-Serif',
+        fontSize: '20px'
+    },
 };
 
 class Pokemon extends Component {
@@ -57,6 +66,7 @@ class Pokemon extends Component {
                 style={styles.modal}
                 contentLabel="Modal"
             >
+                <button onClick={this.props.handleRequestCloseFunc} style={styles.closeButton}>X</button>
                 <h2 style={styles.title}>
                     {pokemon.forms[0].name.charAt(0).toUpperCase() + pokemon.forms[0].name.substr(1).toLowerCase()}
                 </h2>
