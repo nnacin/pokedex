@@ -98,7 +98,8 @@ const styles = {
         height: '25px',
         backgroundColor: '#DD092F',
         opacity: '0.6',
-        border: 'none'
+        border: 'none',
+        marginTop: '5px'
     },
     pokemon: {
         maxWidth: '120px',

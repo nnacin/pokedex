@@ -32,6 +32,9 @@ const styles = {
         fontFamily: 'Pokemon',
         cursor: 'pointer'
     },
+    headerIcon: {
+        height: '20px',
+    }
 };
 
 class Header extends Component {
@@ -39,7 +42,7 @@ class Header extends Component {
         return (
             <header style={styles.header}>
                 Pokémon Encyclopedia<br /><br/>
-                Pokedex<br/>
+                P<img src='styles/iconPokeball.png' style={styles.headerIcon}/>kedex<br/>
                 <button
                     onClick={() => this.props.showMyPokemon()}
                     style={styles.button}
