@@ -11,15 +11,13 @@ Featursi:
 Korisnik aplikacije mora biti u mogucnosti:
 - [x] pregledati listu pokemona
 
-● pregledati listu pokemona
+- [x] za svakog pokemona pregledati njegove statove, poteze i sl.
 
-● za svakog pokemona pregledati njegove statove, poteze i sl.
+- [x] dodati/maknuti pojedinog pokemona u listu “My pokemon”
 
-● dodati/maknuti pojedinog pokemona u listu “My pokemon”
+- [x] pregledati listu “My pokemon”
 
-● pregledati listu “My pokemon”
-
-● pregledati detalje “My pokemon”
+- [x] pregledati detalje “My pokemon”
 
 <br>Koristen boilerplate: https://github.com/nolotz/react-simple-boilerplate
 
