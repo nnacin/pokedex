@@ -20,7 +20,16 @@ Korisnik aplikacije mora biti u mogucnosti:
 
 ● pregledati detalje “My pokemon”
 
-Koristen boilerplate: https://github.com/nolotz/react-simple-boilerplate
+<br>Koristen boilerplate: https://github.com/nolotz/react-simple-boilerplate
+
+<br>Pokretanje:
+<br>
+
+```
+npm install
+npm start
+http://localhost:3000
+```
 
 Znam da dizajn nije bas nesto, ali funkcionalno jest! :)
 
