@@ -32,4 +32,7 @@ http://localhost:3000
 
 Znam da dizajn nije bas nesto, ali funkcionalno jest! :)
 
+Paginacija, slike pokemona, persistentna lista My pokemon, (placeholder slika u slucaju da pokemon nema sliku; potrebna optimizacija pa je zakomentirano) and many more..
+
+
 
