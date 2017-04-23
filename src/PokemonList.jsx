@@ -28,6 +28,32 @@ const styles = {
         width: '50px',
         transform: 'translateX(120%)'
     },
+    overlay: {
+        zIndex: '3',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        opacity: 0.8,
+        visibility: 'visible',
+        transition: 'opacity 0.3s ease-out',
+        backgroundColor: 'rgba(255, 255, 255, 0.75)',
+        border: 'none',
+        width: '100%'
+    },
+    overlayNone: {
+        zIndex: 3,
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        opacity: 0,
+        visibility: 'hidden',
+        transition: 'opacity 0.3s ease-out',
+        backgroundColor: 'rgba(0, 0, 0, 0.298039)'
+    },
     pokemonList: {
         minHeight: '100vh',
         height: 'auto',
@@ -71,7 +97,7 @@ const styles = {
         width: '100%',
         height: '25px',
         backgroundColor: '#DD092F',
-        opacity: '0.3',
+        opacity: '0.6',
         border: 'none'
     },
     pokemon: {
@@ -202,6 +228,7 @@ class PokemonList extends Component {
                             handleRequestCloseFunc={() => this.setState({ selectedPokemon: {} })}
                         />
                     }
+                    <div style={this.props.showMyPokemon ? styles.overlay : styles.overlayNone} onClick={this.props.requestCloseFn}/>
                     <div style={this.props.showMyPokemon ? styles.openMyPokemon : styles.closeMyPokemon}>
                         <button onClick={this.props.requestCloseFn} style={styles.closeButton}>X</button>
                         <h2 style={styles.title}>My pokemon</h2>

@@ -30,6 +30,7 @@ const styles = {
         marginRight: '5px',
         color: 'white',
         fontFamily: 'Pokemon',
+        cursor: 'pointer'
     },
 };
 
