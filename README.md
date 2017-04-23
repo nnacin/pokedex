@@ -9,6 +9,7 @@ Svi potrebni podaci Podaci o pokemonima dostupni su na http://pokeapi.co/
 Featursi:
 
 Korisnik aplikacije mora biti u mogucnosti:
+- [x] pregledati listu pokemona
 
 ● pregledati listu pokemona
 
