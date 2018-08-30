@@ -1,27 +1,27 @@
 # pokedex
 
-Client side JavaScript aplikacija: "Pokémon Encyclopedia" ­ Pokedex
+Client side JavaScript app: "Pokémon Encyclopedia" ­ Pokedex
 
 (http://pokemon.wikia.com/wiki/Pok%C3%A9dex).
 
-Svi potrebni podaci Podaci o pokemonima dostupni su na http://pokeapi.co/
+All info about pokemons are available here http://pokeapi.co/
 
-Featursi:
+Featurs:
 
-Korisnik aplikacije mora biti u mogucnosti:
-- [x] pregledati listu pokemona
+User of the app can be able to
+- [x] check the list of pokemons
 
-- [x] za svakog pokemona pregledati njegove statove, poteze i sl.
+- [x] for every pokemon check its stats, moves etc.
 
-- [x] dodati/maknuti pojedinog pokemona u listu “My pokemon”
+- [x] add/remove a pokemon from the list "My pokemon"
 
-- [x] pregledati listu “My pokemon”
+- [x] browse through the list of "My pokemon"
 
-- [x] pregledati detalje “My pokemon”
+- [x] check details of "My pokemon"
 
-<br>Koristen boilerplate: https://github.com/nolotz/react-simple-boilerplate
+<br>Used boilerplate: https://github.com/nolotz/react-simple-boilerplate
 
-<br>Pokretanje:
+<br>How to start:
 <br>
 
 ```
@@ -30,6 +30,5 @@ npm start
 http://localhost:3000
 ```
 
-Znam da dizajn nije bas nesto, ali funkcionalno jest! :)
 
 
